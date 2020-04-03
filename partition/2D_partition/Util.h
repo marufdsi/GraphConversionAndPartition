@@ -6,7 +6,7 @@
 #define GRAPHCONVERSIONANDPARTITION_UTIL_H
 
 #include <vector>
-
+#include <iostream>
 typedef float ValueType;
 typedef int idx_t;
 
