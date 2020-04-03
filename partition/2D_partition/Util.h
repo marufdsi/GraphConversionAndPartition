@@ -16,6 +16,7 @@ typedef int idx_t;
 #define MM_REAL_STR		"real"
 #define MM_INT_STR		"integer"
 #define MM_SYMM_STR		"symmetric"
+#define MM_PATTERN_STR  "pattern"
 
 
 class Parse{
