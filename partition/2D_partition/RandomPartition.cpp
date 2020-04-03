@@ -3,6 +3,7 @@
 //
 #include <time.h>
 #include <math.h>
+#include <cstring>
 #include "RandomPartition.h"
 
 // A utility function to swap to integers
@@ -54,7 +55,7 @@ int RandomPartition::partition(int *i_idx, int *j_idx, ValueType *values, int n,
                 FILE *newMat;
                 char mat_filename[MAXLINE];
                 sprintf(mat_filename, "%s_random_%d_%d", outdir.c_str(), nparts, (_part+cl));
-                if (!(newMat = fopen(strcat(mat_filename, ".mtx"), "w"))) {
+                if (!(newMat = fopen(std::strcat(mat_filename, ".mtx"), "w"))) {
                     std::cerr << "fopen: failed to open file '" << mat_filename << "'" << std::endl;
                     return 1;
                 }
