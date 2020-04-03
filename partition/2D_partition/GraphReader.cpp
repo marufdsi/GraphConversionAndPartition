@@ -10,9 +10,18 @@
 
 idx_t GraphReader::readMatrix(const std::string filename, idx_t *n, idx_t *nnz, idx_t **row_ptr, idx_t **col_ptr, ValueType **val_ptr){
     idx_t nrows, ncols, nz_elements;
+    char banner[MM_MAX_TOKEN_LENGTH];
+    char mtx[MM_MAX_TOKEN_LENGTH];
+    char crd[MM_MAX_TOKEN_LENGTH];
+    char data_type[MM_MAX_TOKEN_LENGTH];
+    char storage_scheme[MM_MAX_TOKEN_LENGTH];
     // Open the file:
     std::ifstream fin(filename.c_str());
-
+    fin >> banner >> mtx >> crd >> data_type >> storage_scheme;
+    if (strcmp(storage_scheme, MM_SYMM_STR) != 0){
+        std::cout<<"Matrix is not symmetric" <<std::endl;
+        return MM_UNSUPPORTED_TYPE;
+    }
 // Ignore headers and comments:
     while (fin.peek() == '%') fin.ignore(2048, '\n');
 
@@ -38,26 +47,29 @@ idx_t GraphReader::readMatrix(const std::string filename, idx_t *n, idx_t *nnz, 
     ValueType *values = (ValueType *) malloc(nz_elements * sizeof(ValueType));
 //    srand ( time(NULL) );
     for (int i = 0; i < *nnz; i++) {
-//        fin >> i_idx[i] >> j_idx[i] >> values[i];
-        fin >> i_idx[i] >> j_idx[i];
-        values[i] = rand()%((nrows/10000) + 1 );
-        /*if(i_idx[i] == 0 || j_idx[i] == 0){
-            fin >> i_idx[i] >> j_idx[i];
-            values[i] = rand()%((nrows/10000) + 1 );
-        }*/
-//        std::cout<<i_idx[i] << " , " << j_idx[i] << " , " << values[i] << std::endl;
-        i_idx[i]--;
-        j_idx[i]--;
-    }
-
-    for (int i = 0; i < nz_elements; i++) {
-        if (i_idx[i] >= nrows || i_idx[i] < 0) {
-            printf("Index out of bound for row=%d\n", i_idx[i]);
-            return 1;
+        int idxi, idxj;
+        ValueType fval;
+        int ival;
+        if (strcmp(data_type, MM_REAL_STR) == 0) {
+            fin >> idxi >> idxj >> fval;
+        } else if (strcmp(data_type, MM_PATTERN_STR) == 0){
+            fin >> idxi >> idxj;
+            fval = 1.0;
+        } else if (strcmp(data_type, MM_INT_STR) == 0){
+            fin >> idxi >> idxj >> ival;
+            fval = ival;
+        } else {
+            std::cout<<"Unsupported data type!" <<std::endl;
+            return MM_UNSUPPORTED_TYPE;
         }
-        ((*row_ptr)[i_idx[i]])++;
-    }
 
+        idxi--;
+        idxj--;
+        ((*row_ptr)[idxi])++;
+        i_idx[i] = idxi;
+        j_idx[i] = idxj;
+        values[i] = fval;
+    }
     for (int i = 0, cumsum = 0; i < nrows; i++) {
         int temp = (*row_ptr)[i];
         (*row_ptr)[i] = cumsum;
