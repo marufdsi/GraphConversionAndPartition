@@ -17,12 +17,15 @@ idx_t GraphReader::readMatrix(const std::string filename, idx_t *n, idx_t *nnz, 
     char data_type[MM_MAX_TOKEN_LENGTH];
     char storage_scheme[MM_MAX_TOKEN_LENGTH];
     // Open the file:
-    std::ifstream fin(filename.c_str());
-    fin >> banner >> mtx >> crd >> data_type >> storage_scheme;
+    std::ifstream f_head(filename.c_str());
+    f_head >> banner >> mtx >> crd >> data_type >> storage_scheme;
+    std::cout<< banner << "\t" << mtx << "\t" << crd << "\t" << data_type << "\t" << storage_scheme << std::endl;
+    f_head.close();
     if (std::strcmp(storage_scheme, MM_SYMM_STR) != 0){
         std::cout<<"Matrix is not symmetric" <<std::endl;
         return MM_UNSUPPORTED_TYPE;
     }
+    std::ifstream fin(filename.c_str());
 // Ignore headers and comments:
     while (fin.peek() == '%') fin.ignore(2048, '\n');
 
