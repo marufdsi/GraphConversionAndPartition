@@ -1,6 +1,6 @@
 TARGET := partition
 
-CXX = g++
+CXX = icpc
 
 CXXFLAGS = -O3 -std=c++11 -Wall
 
