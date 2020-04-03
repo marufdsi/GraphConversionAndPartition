@@ -7,6 +7,7 @@
 #include <fstream>
 #include <algorithm>
 #include <time.h>
+#include <cstring>
 
 idx_t GraphReader::readMatrix(const std::string filename, idx_t *n, idx_t *nnz, idx_t **row_ptr, idx_t **col_ptr, ValueType **val_ptr){
     idx_t nrows, ncols, nz_elements;
@@ -18,7 +19,7 @@ idx_t GraphReader::readMatrix(const std::string filename, idx_t *n, idx_t *nnz, 
     // Open the file:
     std::ifstream fin(filename.c_str());
     fin >> banner >> mtx >> crd >> data_type >> storage_scheme;
-    if (strcmp(storage_scheme, MM_SYMM_STR) != 0){
+    if (std::strcmp(storage_scheme, MM_SYMM_STR) != 0){
         std::cout<<"Matrix is not symmetric" <<std::endl;
         return MM_UNSUPPORTED_TYPE;
     }
@@ -50,12 +51,12 @@ idx_t GraphReader::readMatrix(const std::string filename, idx_t *n, idx_t *nnz, 
         int idxi, idxj;
         ValueType fval;
         int ival;
-        if (strcmp(data_type, MM_REAL_STR) == 0) {
+        if (std::strcmp(data_type, MM_REAL_STR) == 0) {
             fin >> idxi >> idxj >> fval;
-        } else if (strcmp(data_type, MM_PATTERN_STR) == 0){
+        } else if (std::strcmp(data_type, MM_PATTERN_STR) == 0){
             fin >> idxi >> idxj;
             fval = 1.0;
-        } else if (strcmp(data_type, MM_INT_STR) == 0){
+        } else if (std::strcmp(data_type, MM_INT_STR) == 0){
             fin >> idxi >> idxj >> ival;
             fval = ival;
         } else {
