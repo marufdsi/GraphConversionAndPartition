@@ -55,7 +55,7 @@ int RandomPartition::partition(int *i_idx, int *j_idx, ValueType *values, int n,
 //            printf("Part=%d, row=%d, col=%d\n", _part, row, col);
             for (int cl = 0; cl < col; ++cl) {
 //                FILE *newMat;
-                ofstream outfile;
+                std::ofstream outfile;
                 char mat_filename[MAXLINE];
                 sprintf(mat_filename, "%s_random_%d_%d", outdir.c_str(), nparts, (_part+cl));
                 outfile.open(mat_filename, ios::out | ios::trunc );
