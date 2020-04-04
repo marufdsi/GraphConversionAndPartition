@@ -22,7 +22,7 @@ idx_t GraphReader::readMatrix(const std::string filename, idx_t *n, idx_t *nnz, 
     std::cout<< banner << "\t" << mtx << "\t" << crd << "\t" << data_type << "\t" << storage_scheme << std::endl;
     f_head.close();
     if (std::strcmp(storage_scheme, MM_SYMM_STR) != 0 && std::strcmp(storage_scheme, MM_GENERAL_STR) != 0){
-        std::cout<<"Matrix is not symmetric" <<std::endl;
+        std::cout<<"Matrix is not symmetric or general!" <<std::endl;
         return MM_UNSUPPORTED_TYPE;
     }
     std::ifstream fin(filename.c_str());
