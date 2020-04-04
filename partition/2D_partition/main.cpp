@@ -33,5 +33,8 @@ int main(int argc, char *argv[]){
     std::cout<< "Output File: " << outdir + "/" + goodFormat[0] << std::endl;
     RandomPartition partition;
     partition.partition(i_idx, j_idx, values, n, nnz, nparts, outdir + "/" + goodFormat[0]);
+    free(i_idx);
+    free(j_idx);
+    free(values);
     return 0;
 }

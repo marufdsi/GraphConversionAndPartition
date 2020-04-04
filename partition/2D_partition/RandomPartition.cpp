@@ -86,6 +86,10 @@ int RandomPartition::partition(int *i_idx, int *j_idx, ValueType *values, int n,
             _part += col;
         }
     }
-    
+
+    free(new_ids);
+    free(random_vertex);
+    free(nEdges_part);
+
     return 0;
 }
