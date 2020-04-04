@@ -59,10 +59,10 @@ int RandomPartition::partition(int *i_idx, int *j_idx, ValueType *values, int n,
                 char mat_filename[MAXLINE];
                 sprintf(mat_filename, "%s_random_%d_%d", outdir.c_str(), nparts, (_part+cl));
                 outfile.open(mat_filename, ios::out | ios::trunc );
-                if (!(newMat = fopen(std::strcat(mat_filename, ".mtx"), "w"))) {
+                /*if (!(newMat = fopen(std::strcat(mat_filename, ".mtx"), "w"))) {
                     std::cerr << "fopen: failed to open file '" << mat_filename << "'" << std::endl;
                     return 1;
-                }
+                }*/
 //                fprintf(newMat, "%%%MatrixMarket matrix coordinate real general\n");
 //                fprintf(newMat, "%d %d %d\n", nVartex, n, nEdges_part[_part + cl]);
                 outfile << "%%%MatrixMarket matrix coordinate real general" << std::endl;
