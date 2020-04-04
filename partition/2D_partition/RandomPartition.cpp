@@ -58,7 +58,7 @@ int RandomPartition::partition(int *i_idx, int *j_idx, ValueType *values, int n,
                 std::ofstream outfile;
                 char mat_filename[MAXLINE];
                 sprintf(mat_filename, "%s_random_%d_%d", outdir.c_str(), nparts, (_part+cl));
-                outfile.open(mat_filename, ios::out | ios::trunc );
+                outfile.open(mat_filename, std::ios::out | std::ios::trunc );
                 /*if (!(newMat = fopen(std::strcat(mat_filename, ".mtx"), "w"))) {
                     std::cerr << "fopen: failed to open file '" << mat_filename << "'" << std::endl;
                     return 1;
