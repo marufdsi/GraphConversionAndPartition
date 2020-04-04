@@ -66,7 +66,7 @@ int RandomPartition::partition(int *i_idx, int *j_idx, ValueType *values, int n,
 //                fprintf(newMat, "%%%MatrixMarket matrix coordinate real general\n");
 //                fprintf(newMat, "%d %d %d\n", nVartex, n, nEdges_part[_part + cl]);
                 outfile << "%%%MatrixMarket matrix coordinate real general" << std::endl;
-                outfile << nVartex << " "<< n << " " << nEdges_part[_part + cl]) << std::endl;
+                outfile << nVartex << " "<< n << " " << nEdges_part[_part + cl] << std::endl;
 
                 for (int itr = start; itr <= i; ++itr) {
                     u = random_vertex[itr];
