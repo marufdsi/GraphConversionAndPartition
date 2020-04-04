@@ -11,23 +11,18 @@
 
 idx_t GraphReader::readMatrix(const std::string filename, idx_t *n, idx_t *nnz, idx_t **row_ptr, idx_t **col_ptr, ValueType **val_ptr){
     idx_t nrows, ncols, nz_elements;
-//    char banner[MM_MAX_TOKEN_LENGTH];
-    std::string banner;
-//    char mtx[MM_MAX_TOKEN_LENGTH];
-    std::string mtx;
-//    char crd[MM_MAX_TOKEN_LENGTH];
-    std::string crd;
-//    char data_type[MM_MAX_TOKEN_LENGTH];
-    std::string data_type;
-//    char storage_scheme[MM_MAX_TOKEN_LENGTH];
-    std::string storage_scheme;
+    char banner[MM_MAX_TOKEN_LENGTH];
+    char mtx[MM_MAX_TOKEN_LENGTH];
+    char crd[MM_MAX_TOKEN_LENGTH];
+    char data_type[MM_MAX_TOKEN_LENGTH];
+    char storage_scheme[MM_MAX_TOKEN_LENGTH];
     // Open the file:
     std::ifstream f_head(filename.c_str());
     f_head >> banner >> mtx >> crd >> data_type >> storage_scheme;
     std::cout<< banner << "\t" << mtx << "\t" << crd << "\t" << data_type << "\t" << storage_scheme << std::endl;
     f_head.close();
-    if (storage_scheme != MM_SYMM_STR && storage_scheme != MM_GENERAL_STR){
-        std::cout<<"Matrix is not symmetric or general! " << storage_scheme <<std::endl;
+    if (std::strcmp(storage_scheme, MM_SYMM_STR) != 0 && std::strcmp(storage_scheme, MM_GENERAL_STR) != 0){
+        std::cout<<"Matrix is not symmetric or general!" <<std::endl;
         return MM_UNSUPPORTED_TYPE;
     }
     std::ifstream fin(filename.c_str());
@@ -59,12 +54,12 @@ idx_t GraphReader::readMatrix(const std::string filename, idx_t *n, idx_t *nnz, 
         int idxi, idxj;
         ValueType fval;
         int ival;
-        if (data_type == MM_REAL_STR) {
+        if (std::strcmp(data_type, MM_REAL_STR) == 0) {
             fin >> idxi >> idxj >> fval;
-        } else if (data_type == MM_PATTERN_STR){
+        } else if (std::strcmp(data_type, MM_PATTERN_STR) == 0){
             fin >> idxi >> idxj;
             fval = 1.0;
-        } else if (data_type == MM_INT_STR){
+        } else if (std::strcmp(data_type, MM_INT_STR) == 0){
             fin >> idxi >> idxj >> ival;
             fval = ival;
         } else {
