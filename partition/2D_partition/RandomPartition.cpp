@@ -76,7 +76,7 @@ int RandomPartition::partition(int *i_idx, int *j_idx, ValueType *values, int n,
 //                printf("Done=%d\n", cl);
 
 //                 close file
-                newMat.close();
+                newMat->close();
                 /*if (fclose(newMat) != 0) {
                     std::cerr << "fopen: failed to close file '"<<  mat_filename << "'" <<std::endl;
                     return 1;
