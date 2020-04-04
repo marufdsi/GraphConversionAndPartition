@@ -16,7 +16,7 @@ idx_t GraphReader::readMatrix(const std::string filename, idx_t *n, idx_t *nnz, 
 //    char mtx[MM_MAX_TOKEN_LENGTH];
     std::string mtx;
 //    char crd[MM_MAX_TOKEN_LENGTH];
-    string crd;
+    std::string crd;
 //    char data_type[MM_MAX_TOKEN_LENGTH];
     std::string data_type;
 //    char storage_scheme[MM_MAX_TOKEN_LENGTH];
