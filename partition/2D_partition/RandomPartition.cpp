@@ -54,7 +54,7 @@ int RandomPartition::partition(int *i_idx, int *j_idx, ValueType *values, int n,
             for (int cl = 0; cl < col; ++cl) {
                 std::ofstream outfile;
                 char mat_filename[MAXLINE];
-                sprintf(mat_filename, "%s_random_%d_%d", outdir.c_str(), nparts, (_part+cl));
+                sprintf(mat_filename, "%s_random_%d_%d.mtx", outdir.c_str(), nparts, (_part+cl));
                 outfile.open(mat_filename, std::ios::out | std::ios::trunc );
                 outfile << "%%%MatrixMarket matrix coordinate real general" << std::endl;
                 outfile << nVartex << " "<< n << " " << nEdges_part[_part + cl] << std::endl;
