@@ -10,7 +10,7 @@
 #include <cstring>
 
 idx_t GraphReader::readMatrix(const std::string filename, idx_t *n, idx_t *nnz, idx_t **row_ptr, idx_t **col_ptr, ValueType **val_ptr){
-    idx_t nrows, ncols, nz_elements, isSymmetric=0;
+    idx_t nrows, ncols, nz_elements, isSymmetric=0, i;
     char banner[MM_MAX_TOKEN_LENGTH];
     char mtx[MM_MAX_TOKEN_LENGTH];
     char crd[MM_MAX_TOKEN_LENGTH];
@@ -42,7 +42,7 @@ idx_t GraphReader::readMatrix(const std::string filename, idx_t *n, idx_t *nnz, 
     idx_t *j_idx = (idx_t *) malloc(nz_elements * sizeof(idx_t));
     ValueType *values = (ValueType *) malloc(nz_elements * sizeof(ValueType));
 //    srand ( time(NULL) );
-    for (int i = 0; i < *nnz; i++) {
+    for (int i = 0; i < nz_elements; i++) {
         int idxi, idxj;
         ValueType fval;
         int ival;
@@ -68,7 +68,7 @@ idx_t GraphReader::readMatrix(const std::string filename, idx_t *n, idx_t *nnz, 
     }
     fin.close();
     if (isSymmetric) {
-        for (i = 0; i < nz; i++) {
+        for (i = 0; i < nz_elements; i++) {
             if (i_idx[i] != j_idx[i])
                 csrRowPtrA_counter[j_idx[i]]++;
         }
@@ -104,7 +104,7 @@ idx_t GraphReader::readMatrix(const std::string filename, idx_t *n, idx_t *nnz, 
                 (*val_ptr)[offset] = values[i];
                 csrRowPtrA_counter[j_idx[i]]++;
             } else {
-                int offset = (*row_ptr)[csrRowIdxA_tmp[i]] + csrRowPtrA_counter[csrRowIdxA_tmp[i]];
+                int offset = (*row_ptr)[i_idx[i]] + csrRowPtrA_counter[i_idx[i]];
                 (*col_ptr)[offset] = j_idx[i];
                 (*val_ptr)[offset] = values[i];
                 csrRowPtrA_counter[i_idx[i]]++;
